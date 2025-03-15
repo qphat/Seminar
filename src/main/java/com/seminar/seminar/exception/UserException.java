@@ -1,4 +1,4 @@
-package exception;
+package com.seminar.seminar.exception;
 
 public class UserException extends Exception {
 

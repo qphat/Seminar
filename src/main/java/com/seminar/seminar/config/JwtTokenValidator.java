@@ -1,4 +1,4 @@
-package com.koomi.seminar2.config;
+package com.seminar.seminar.config;
 
 import io.jsonwebtoken.Claims;
 import io.jsonwebtoken.Jwts;
@@ -58,7 +58,6 @@ public class JwtTokenValidator extends OncePerRequestFilter {
                 throw new RuntimeException("Invalid token...", e);
             }
         } else {
-            // If no JWT, continue the filter chain
             filterChain.doFilter(request, response);
         }
     }

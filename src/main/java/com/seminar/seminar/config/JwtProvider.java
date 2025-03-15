@@ -1,4 +1,4 @@
-package com.koomi.seminar2.config;
+package com.seminar.seminar.config;
 
 import io.jsonwebtoken.Jwts;
 import io.jsonwebtoken.security.Keys;

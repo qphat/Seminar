@@ -1,4 +1,4 @@
-package request;
+package com.seminar.seminar.request;
 
 
 import lombok.AllArgsConstructor;

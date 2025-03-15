@@ -1,14 +1,14 @@
-package service.Imp;
+package com.seminar.seminar.service.Imp;
 
-import domain.Role;
-import model.User;
+import com.seminar.seminar.domain.Role;
+import com.seminar.seminar.model.User;
 import org.springframework.security.core.userdetails.UserDetails;
 import org.springframework.security.core.userdetails.UserDetailsService;
 import org.springframework.security.core.userdetails.UsernameNotFoundException;
 import org.springframework.stereotype.Service;
 import org.springframework.security.core.GrantedAuthority;
 import org.springframework.security.core.authority.SimpleGrantedAuthority;
-import repository.UserRepository;
+import com.seminar.seminar.repository.UserRepository;
 
 import java.util.HashSet;
 import java.util.Set;
@@ -35,8 +35,15 @@ public class CustomeUserServiceImplementation implements UserDetailsService {
     private UserDetails buildUserDetails(String email, String password, Role role) {
         if (role == null) role = Role.DELEGATE;
 
-        Set<GrantedAuthority> authorities = new HashSet<>(Set.of(new SimpleGrantedAuthority(role.toString())));
+        Set<GrantedAuthority> authorities = new HashSet<>();
+        authorities.add(new SimpleGrantedAuthority(role.toString()));
+
+        // Nếu là ADMIN, cấp mọi quyền
+        if (role == Role.ADMIN) {
+            authorities.add(new SimpleGrantedAuthority("ROLE_ALL"));
+        }
 
         return new org.springframework.security.core.userdetails.User(email, password, authorities);
     }
 }
+
