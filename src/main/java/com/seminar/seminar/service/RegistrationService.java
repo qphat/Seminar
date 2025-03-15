@@ -1,7 +1,6 @@
 package com.seminar.seminar.service;
 
 import com.seminar.seminar.response.RegistrationResponse;
-import org.springframework.http.ResponseEntity;
 
 import java.util.List;
 
