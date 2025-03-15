@@ -1,4 +1,4 @@
-package model;
+package com.seminar.seminar.model;
 
 import jakarta.persistence.*;
 import lombok.AllArgsConstructor;

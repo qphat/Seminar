@@ -1,4 +1,4 @@
-package request;
+package com.seminar.seminar.request;
 
 import lombok.Data;
 import lombok.NoArgsConstructor;
@@ -8,4 +8,5 @@ import lombok.NoArgsConstructor;
 public class SignupRequest {
     private String fullName;
     private String email;
+    private String password;
 }

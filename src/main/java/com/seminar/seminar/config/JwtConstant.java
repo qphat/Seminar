@@ -1,4 +1,4 @@
-package com.koomi.seminar2.config;
+package com.seminar.seminar.config;
 
 public class JwtConstant {
     public static final String SECRET_KEY = "ajksfhasjkfhaskjlfhasjklfhaslajshfjaksfdklzcm";

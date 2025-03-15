@@ -1,6 +1,6 @@
-package response;
+package com.seminar.seminar.response;
 
-import domain.Role;
+import com.seminar.seminar.domain.Role;
 import lombok.AllArgsConstructor;
 import lombok.Data;
 import lombok.NoArgsConstructor;
@@ -11,8 +11,6 @@ import lombok.NoArgsConstructor;
 public class AuthResponse {
 
     private String jwt;
-
-    private boolean status;
 
     private String message;
 
