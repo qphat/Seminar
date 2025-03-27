@@ -38,10 +38,8 @@ public class AppConfig {
                 .authorizeHttpRequests(auth -> auth
                         // Các endpoint công khai (không cần đăng nhập)
                         .requestMatchers("/api/auth/**").permitAll()
-                        // ADMIN hoặc ROLE_ALL có quyền truy cập toàn bộ hệ thống
-                        .requestMatchers("/api/**").hasAnyAuthority("ADMIN", "ROLE_ALL")
+                        .requestMatchers("/api/**").permitAll()
                         // Các endpoint còn lại yêu cầu đăng nhập
-                        .anyRequest().authenticated()
                 )
                 .sessionManagement(session -> session.sessionCreationPolicy(SessionCreationPolicy.STATELESS))
                 .addFilterBefore(jwtTokenValidator, UsernamePasswordAuthenticationFilter.class);
@@ -52,7 +50,7 @@ public class AppConfig {
     @Bean
     public CorsConfigurationSource corsConfigurationSource() {
         CorsConfiguration configuration = new CorsConfiguration();
-        configuration.setAllowedOrigins(List.of("http://localhost:3000"));
+        configuration.setAllowedOrigins(List.of("http://localhost:4200"));
         configuration.setAllowedMethods(Arrays.asList("GET", "POST", "PUT", "DELETE", "OPTIONS"));
         configuration.setAllowedHeaders(Arrays.asList("Authorization", "Content-Type"));
         configuration.setAllowCredentials(true);

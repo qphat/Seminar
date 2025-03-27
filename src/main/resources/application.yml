@@ -8,7 +8,7 @@ spring:
   datasource:
     url: jdbc:mysql://localhost:3306/Seminar
     username: root
-    password: 2202phoaT
+    password: 220201
     driver-class-name: com.mysql.cj.jdbc.Driver
 
   jpa:
@@ -21,7 +21,7 @@ spring:
 
 admin:
   default:
-    email: taoLaAssmin@gmail.com
+    email: taoLaAssmin1@gmail.com
     password: admin123
 
 

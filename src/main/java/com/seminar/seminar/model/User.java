@@ -31,6 +31,9 @@ public class User {
     @JsonIgnore
     private String password;
 
+    @Column(nullable = false, length = 255)
+    private String phone;
+
     @Enumerated(EnumType.STRING)
     @Column(nullable = false)
     private Role role;

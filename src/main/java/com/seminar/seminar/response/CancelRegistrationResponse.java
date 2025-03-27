@@ -6,9 +6,10 @@ import lombok.Data;
 
 @Data
 @AllArgsConstructor
-public class RegistrationResponse {
+public class CancelRegistrationResponse {
     private Long delegateId;
-    private String fullName;
-    private String email;
+    private Long conferenceId;
     private RegistrationStatus status;
+    private String message;
 }
+

@@ -54,6 +54,15 @@ public class JwtProvider {
                 .get("email", String.class);
     }
 
+    public Long getIdFromToken(String jwt) {
+        return Jwts.parserBuilder()
+                .setSigningKey(secretKey)
+                .build()
+                .parseClaimsJws(jwt)
+                .getBody()
+                .get("id", Long.class);
+    }
+
     // Xử lý các quyền (authorities)
     private String populateAuthorities(Collection<? extends GrantedAuthority> authorities) {
         Set<String> auth = new HashSet<>();

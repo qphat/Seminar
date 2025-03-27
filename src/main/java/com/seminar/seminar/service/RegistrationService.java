@@ -1,12 +1,16 @@
 package com.seminar.seminar.service;
 
-import com.seminar.seminar.response.RegistrationResponse;
+import com.seminar.seminar.response.*;
 
 import java.util.List;
 
 public interface RegistrationService {
-    String registerForConference(Long delegateId, Long conferenceId);
-    String cancelRegistration(Long id);
+    RegistrationResponse registerForConference(Long delegateId, Long conferenceId);
+    CancelRegistrationResponse cancelRegistration(Long delegateId, Long conferenceId);
     List<RegistrationResponse> getRegisteredDelegates(Long conferenceId);
-}
 
+    List<ListRegistrationsResponse> getConferencesByDelegate(Long delegateId);
+
+    List<RegistrationDetailsResponse> getAllRegistrations();
+    UpdateStatusResponse updateRegistrationStatus(Long delegateId, Long conferenceId, String newStatus);
+}

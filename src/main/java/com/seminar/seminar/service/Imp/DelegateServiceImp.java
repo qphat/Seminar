@@ -4,6 +4,7 @@ import com.seminar.seminar.domain.Role;
 import com.seminar.seminar.model.User;
 import com.seminar.seminar.repository.UserRepository;
 import com.seminar.seminar.response.DelegateResponse;
+import com.seminar.seminar.response.DeleteResponse;
 import com.seminar.seminar.service.DelegateService;
 import lombok.RequiredArgsConstructor;
 import org.springframework.stereotype.Service;
@@ -41,6 +42,7 @@ public class DelegateServiceImp implements DelegateService {
                 throw new IllegalArgumentException("User with id " + id + " is not a delegate");
             }
             delegateToUpdate.setFullName(user.getFullName() != null ? user.getFullName() : delegateToUpdate.getFullName());
+            delegateToUpdate.setPhone(user.getPhone() != null ? user.getPhone() : delegateToUpdate.getPhone()); // Cập nhật phone
             userRepository.save(delegateToUpdate);
             return "Delegate updated successfully";
         } else {
@@ -60,21 +62,49 @@ public class DelegateServiceImp implements DelegateService {
 
     /**
      * 2.3 Xóa đại biểu
+     *
      * @param id ID của user (đại biểu)
      * @return String thông báo thành công
      * @throws IllegalArgumentException nếu không tìm thấy hoặc không phải ROLE_DELEGATE
      */
-    public String deleteDelegate(Long id) {
+    public DeleteResponse deleteDelegate(Long id) {
         Optional<User> existingUser = userRepository.findById(id);
         if (existingUser.isPresent()) {
-            User delegateToUpdate = existingUser.get();
-            if (delegateToUpdate.getRole() != Role.DELEGATE) {
+            User delegateToDelete = existingUser.get();
+            if (delegateToDelete.getRole() != Role.DELEGATE) {
                 throw new IllegalArgumentException("User with id " + id + " is not a delegate");
             }
             userRepository.deleteById(id);
-            return "Delegate deleted successfully";
+            return new DeleteResponse("success", "Delegate deleted successfully");
         } else {
             throw new IllegalArgumentException("Delegate not found with id: " + id);
         }
+    }
+
+    /**
+     * 2.4 Thêm đại biểu mới
+     * @param user Đối tượng chứa thông tin đại biểu mới
+     * @return DelegateResponse chứa thông tin đại biểu vừa tạo
+     * @throws IllegalArgumentException nếu email đã tồn tại
+     */
+    public DelegateResponse createDelegate(User user) {
+        // Kiểm tra email đã tồn tại chưa
+        if (userRepository.findByEmail(user.getEmail()) != null) {
+            throw new IllegalArgumentException("Email " + user.getEmail() + " is already in use");
+        }
+
+        // Tạo đại biểu mới
+        User newDelegate = new User();
+        newDelegate.setFullName(user.getFullName());
+        newDelegate.setEmail(user.getEmail());
+        newDelegate.setPhone(user.getPhone());
+        newDelegate.setRole(Role.DELEGATE);
+        newDelegate.setPassword("123456"); // Mật khẩu mặc định
+
+        // Lưu vào cơ sở dữ liệu
+        User savedDelegate = userRepository.save(newDelegate);
+
+        // Trả về DelegateResponse
+        return new DelegateResponse(savedDelegate);
     }
 }

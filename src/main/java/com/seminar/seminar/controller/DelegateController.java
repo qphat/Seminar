@@ -2,6 +2,7 @@ package com.seminar.seminar.controller;
 
 import com.seminar.seminar.model.User;
 import com.seminar.seminar.response.DelegateResponse;
+import com.seminar.seminar.response.DeleteResponse;
 import com.seminar.seminar.service.DelegateService;
 import lombok.RequiredArgsConstructor;
 import org.springframework.beans.factory.annotation.Autowired;
@@ -43,9 +44,16 @@ public class DelegateController {
     }
 
     @DeleteMapping("/{id}")
-    public ResponseEntity<String> deleteDelegate(@PathVariable Long id) {
-        String message = delegateService.deleteDelegate(id);
-        return ResponseEntity.ok(message);
+    public ResponseEntity<DeleteResponse> deleteDelegate(@PathVariable Long id) {
+        DeleteResponse response = delegateService.deleteDelegate(id);
+        return ResponseEntity.ok(response);
+    }
+
+
+    @PostMapping()
+    public ResponseEntity<DelegateResponse> createDelegate(@RequestBody User user) {
+        DelegateResponse response = delegateService.createDelegate(user);
+        return ResponseEntity.ok(response);
     }
 
     @ExceptionHandler(IllegalArgumentException.class)

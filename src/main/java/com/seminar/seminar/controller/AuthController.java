@@ -30,6 +30,7 @@ public class AuthController {
         return new ResponseEntity<>(authResponse, HttpStatus.OK);
     }
 
+
     @PostMapping("/signin")
     public ResponseEntity<AuthResponse> signin(@Valid  @RequestBody LoginRequest loginRequest) {
 

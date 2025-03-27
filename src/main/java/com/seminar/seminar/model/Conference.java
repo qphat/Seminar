@@ -1,5 +1,6 @@
 package com.seminar.seminar.model;
 
+import com.seminar.seminar.domain.ConferenceStatus;
 import jakarta.persistence.*;
 import lombok.*;
 
@@ -27,7 +28,11 @@ public class Conference {
     private String description;
 
     @Column(nullable = false)
-    private LocalDate date;
+    private LocalDateTime startDate;
+
+
+    @Column(nullable = false)
+    private LocalDateTime endDate;
 
     @Column(nullable = false, length = 255)
     private String location;
@@ -37,6 +42,12 @@ public class Conference {
 
     @Column(nullable = false, updatable = false)
     private LocalDateTime createdAt;
+
+    @Column(nullable = true)
+    private LocalDateTime registrationDeadline;
+
+    @Column(nullable = true)
+    private ConferenceStatus status;
 
     @OneToMany(mappedBy = "conference", fetch = FetchType.LAZY, cascade = CascadeType.ALL, orphanRemoval = true)
     private List<Registration> registrations = new ArrayList<>();
@@ -48,13 +59,5 @@ public class Conference {
         }
     }
 
-    public Conference(String title, String description, LocalDate date, String location, Integer capacity) {
-        this.title = title;
-        this.description = description;
-        this.date = date;
-        this.location = location;
-        this.capacity = capacity;
-        this.createdAt = LocalDateTime.now();
-        this.registrations = new ArrayList<>();
-    }
+
 }
