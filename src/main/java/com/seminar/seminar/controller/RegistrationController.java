@@ -62,11 +62,11 @@ public class RegistrationController {
     }
 
     @PutMapping("/update-status")
-    public ResponseEntity<UpdateStatusResponse> updateRegistrationStatus(
+    public ResponseEntity<StatusResponse> updateRegistrationStatus(
             @RequestParam Long delegateId,
             @RequestParam Long conferenceId,
             @RequestParam String newStatus) {
-        UpdateStatusResponse response = registrationService.updateRegistrationStatus(delegateId, conferenceId, newStatus);
+        StatusResponse response = registrationService.updateRegistrationStatus(delegateId, conferenceId, newStatus);
         if (response.getStatus().equals("error")) {
             return ResponseEntity.status(HttpStatus.BAD_REQUEST).body(response);
         }

@@ -42,6 +42,7 @@ public class AuthServiceImp implements AuthService {
         String email = req.getEmail();
         String fullName = req.getFullName();
         String password = req.getPassword();
+        String phone = req.getPhone();
 
         // Kiểm tra email đã tồn tại chưa
         if (userRepository.findByEmail(email) != null) {
@@ -53,7 +54,7 @@ public class AuthServiceImp implements AuthService {
         createdUser.setEmail(email);
         createdUser.setFullName(fullName);
         createdUser.setRole(Role.DELEGATE);
-        createdUser.setPhone("00001234712");
+        createdUser.setPhone(phone);
         createdUser.setPassword(passwordEncoder.encode(password));
 
         // Lưu user vào database

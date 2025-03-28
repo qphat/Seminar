@@ -12,5 +12,5 @@ public interface RegistrationService {
     List<ListRegistrationsResponse> getConferencesByDelegate(Long delegateId);
 
     List<RegistrationDetailsResponse> getAllRegistrations();
-    UpdateStatusResponse updateRegistrationStatus(Long delegateId, Long conferenceId, String newStatus);
+    StatusResponse updateRegistrationStatus(Long delegateId, Long conferenceId, String newStatus);
 }

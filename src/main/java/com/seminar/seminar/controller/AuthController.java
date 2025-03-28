@@ -26,6 +26,7 @@ public class AuthController {
         authResponse.setJwt(token);
         authResponse.setMessage("Register Success");
         authResponse.setRole(Role.DELEGATE);
+        authResponse.setPhone(req.getPhone());
 
         return new ResponseEntity<>(authResponse, HttpStatus.OK);
     }

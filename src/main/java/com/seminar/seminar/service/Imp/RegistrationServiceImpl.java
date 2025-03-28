@@ -220,18 +220,18 @@ public class RegistrationServiceImpl implements RegistrationService {
      * @return Đối tượng UpdateStatusResponse chứa kết quả cập nhật (success/error) và thông báo
      */
     @Override
-    public UpdateStatusResponse updateRegistrationStatus(Long delegateId, Long conferenceId, String newStatus) {
+    public StatusResponse updateRegistrationStatus(Long delegateId, Long conferenceId, String newStatus) {
         // Kiểm tra trạng thái mới hợp lệ
         if (!newStatus.equalsIgnoreCase("PENDING") &&
                 !newStatus.equalsIgnoreCase("CONFIRMED") &&
                 !newStatus.equalsIgnoreCase("CANCELED")) {
-            return new UpdateStatusResponse("error", "Invalid status. Must be PENDING, CONFIRMED, or CANCELED");
+            return new StatusResponse("error", "Invalid status. Must be PENDING, CONFIRMED, or CANCELED");
         }
 
         // Tìm bản ghi đăng ký
         Optional<Registration> registrationOpt = registrationRepository.findByDelegateIdAndConferenceId(delegateId, conferenceId);
         if (registrationOpt.isEmpty()) {
-            return new UpdateStatusResponse("error", "Registration not found for delegate " + delegateId + " and conference " + conferenceId);
+            return new StatusResponse("error", "Registration not found for delegate " + delegateId + " and conference " + conferenceId);
         }
 
         Registration registration = registrationOpt.get();
@@ -241,6 +241,6 @@ public class RegistrationServiceImpl implements RegistrationService {
         registration.setStatus(updatedStatus);
         registrationRepository.save(registration);
 
-        return new UpdateStatusResponse("success", "Registration status updated to " + newStatus.toUpperCase());
+        return new StatusResponse("success", "Registration status updated to " + newStatus.toUpperCase());
     }
 }

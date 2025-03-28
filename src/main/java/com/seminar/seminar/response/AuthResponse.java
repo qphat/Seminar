@@ -19,5 +19,7 @@ public class AuthResponse {
     private String message;
 
     private Role role;
+
+    private String phone;
 }
 

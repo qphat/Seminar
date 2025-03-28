@@ -3,6 +3,7 @@ package com.seminar.seminar.controller;
 import com.seminar.seminar.model.Conference;
 import com.seminar.seminar.response.ConferenceResponse;
 import com.seminar.seminar.response.DeleteResponse;
+import com.seminar.seminar.response.StatusResponse;
 import com.seminar.seminar.service.ConferenceService;
 import lombok.RequiredArgsConstructor;
 import org.springframework.http.HttpStatus;
@@ -19,10 +20,16 @@ public class ConferenceController {
     private final ConferenceService conferenceService;
 
     @PostMapping
-    public ResponseEntity<String> createConference(@RequestBody Conference conference ) {
-        String message = conferenceService.createConference(conference);
-        return ResponseEntity.ok(message);
+    public ResponseEntity<StatusResponse> createConference(@RequestBody Conference conference) {
+        StatusResponse response = conferenceService.createConference(conference);
+
+        if ("error".equals(response.getStatus())) {
+            return ResponseEntity.badRequest().body(response);
+        }
+
+        return ResponseEntity.ok(response);
     }
+
 
     @GetMapping
     public ResponseEntity<List<ConferenceResponse>> getAllConferences() {

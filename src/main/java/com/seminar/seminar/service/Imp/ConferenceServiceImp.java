@@ -6,6 +6,7 @@ import com.seminar.seminar.repository.ConferenceRepository;
 import com.seminar.seminar.repository.RegistrationRepository;
 import com.seminar.seminar.response.ConferenceResponse;
 import com.seminar.seminar.response.DeleteResponse;
+import com.seminar.seminar.response.StatusResponse;
 import com.seminar.seminar.service.ConferenceService;
 import lombok.AllArgsConstructor;
 import org.springframework.stereotype.Service;
@@ -23,31 +24,31 @@ public class ConferenceServiceImp implements ConferenceService {
     private final RegistrationRepository registrationRepository;
 
     @Override
-    public String createConference(Conference conference) {
+    public StatusResponse createConference(Conference conference) {
         if (conference.getTitle() == null ||
                 conference.getStartDate() == null ||
                 conference.getEndDate() == null ||
                 conference.getLocation() == null ||
                 conference.getCapacity() == null ||
                 conference.getRegistrationDeadline() == null) { // Kiểm tra registrationDeadline
-            throw new IllegalArgumentException("Title, dates, location, capacity, and registration deadline are required");
+            return new StatusResponse("error", "Title, dates, location, capacity, and registration deadline are required");
         }
 
         if (conference.getEndDate().isBefore(conference.getStartDate())) {
-            throw new IllegalArgumentException("End date must be after start date");
+            return new StatusResponse("error", "End date must be after start date");
         }
 
         if (conference.getCapacity() <= 0) {
-            throw new IllegalArgumentException("Capacity must be greater than 0");
+            return new StatusResponse("error", "Capacity must be greater than 0");
         }
 
         // Kiểm tra registrationDeadline phải trước startDate
         if (conference.getRegistrationDeadline().isAfter(conference.getStartDate())) {
-            throw new IllegalArgumentException("Registration deadline must be before start date");
+            return new StatusResponse("error", "Registration deadline must be before start date");
         }
 
         conferenceRepository.save(conference);
-        return "Conference created successfully";
+        return new StatusResponse("success", "Conference created successfully");
     }
 
     @Override

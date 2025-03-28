@@ -7,6 +7,7 @@ import com.seminar.seminar.response.DelegateResponse;
 import com.seminar.seminar.response.DeleteResponse;
 import com.seminar.seminar.service.DelegateService;
 import lombok.RequiredArgsConstructor;
+import org.springframework.security.crypto.password.PasswordEncoder;
 import org.springframework.stereotype.Service;
 
 import java.util.List;
@@ -18,6 +19,7 @@ public class DelegateServiceImp implements DelegateService {
 
 
     private final UserRepository userRepository;
+    private final PasswordEncoder passwordEncoder;
 
     /**
      * 2.1 Lấy danh sách đại biểu (user với role ROLE_DELEGATE)
@@ -99,7 +101,10 @@ public class DelegateServiceImp implements DelegateService {
         newDelegate.setEmail(user.getEmail());
         newDelegate.setPhone(user.getPhone());
         newDelegate.setRole(Role.DELEGATE);
-        newDelegate.setPassword("123456"); // Mật khẩu mặc định
+
+        // Mã hóa mật khẩu trước khi lưu
+        String encodedPassword = passwordEncoder.encode("123456");
+        newDelegate.setPassword(encodedPassword);
 
         // Lưu vào cơ sở dữ liệu
         User savedDelegate = userRepository.save(newDelegate);

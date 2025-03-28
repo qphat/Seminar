@@ -5,7 +5,7 @@ import lombok.Data;
 
 @Data
 @AllArgsConstructor
-public class UpdateStatusResponse {
+public class StatusResponse {
     private String status; // "success" hoặc "error"
     private String message;
 }
