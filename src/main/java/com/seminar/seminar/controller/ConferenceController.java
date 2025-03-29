@@ -44,10 +44,14 @@ public class ConferenceController {
     }
 
     @PutMapping("/{id}")
-    public ResponseEntity<String> updateConference(@PathVariable Long id, @RequestBody Conference conference) {
-        String message = conferenceService.updateConference(id, conference);
-        return ResponseEntity.ok(message);
+    public StatusResponse updateConference(@PathVariable Long id, @RequestBody Conference conference) {
+        try {
+            return conferenceService.updateConference(id, conference);
+        } catch (IllegalArgumentException e) {
+            return new StatusResponse("error", e.getMessage());
+        }
     }
+
 
     @DeleteMapping("/{id}")
     public ResponseEntity<DeleteResponse> deleteConference(@PathVariable Long id) {

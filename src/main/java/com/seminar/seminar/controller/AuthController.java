@@ -19,7 +19,7 @@ public class AuthController {
     private final AuthService authService;
 
     @PostMapping("/signup")
-    public ResponseEntity<AuthResponse> createUserHandler(@Valid @RequestBody SignupRequest req) throws Exception {
+    public ResponseEntity<AuthResponse> createUserHandler( @RequestBody SignupRequest req) throws Exception {
 
         String token = authService.createUser(req);
         AuthResponse authResponse = new AuthResponse();

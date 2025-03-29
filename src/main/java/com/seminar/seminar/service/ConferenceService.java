@@ -11,7 +11,7 @@ import java.util.List;
 public interface ConferenceService {
     StatusResponse createConference(Conference conference);
     List<ConferenceResponse> getAllConferences();
-    String updateConference(Long id, Conference conference);
+    StatusResponse updateConference(Long id, Conference conference);
     DeleteResponse deleteConference(Long id);
     ConferenceResponse getConferenceById(Long id);
 }

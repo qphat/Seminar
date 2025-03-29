@@ -3,6 +3,7 @@ package com.seminar.seminar.controller;
 import com.seminar.seminar.model.User;
 import com.seminar.seminar.response.DelegateResponse;
 import com.seminar.seminar.response.DeleteResponse;
+import com.seminar.seminar.response.StatusResponse;
 import com.seminar.seminar.service.DelegateService;
 import lombok.RequiredArgsConstructor;
 import org.springframework.beans.factory.annotation.Autowired;
@@ -38,9 +39,12 @@ public class DelegateController {
     }
 
     @PutMapping("/{id}")
-    public ResponseEntity<String> updateDelegate(@PathVariable Long id, @RequestBody User user) {
-        String message = delegateService.updateDelegate(id, user);
-        return ResponseEntity.ok(message);
+    public StatusResponse updateDelegate(@PathVariable Long id, @RequestBody User user) {
+        try {
+            return delegateService.updateDelegate(id, user);
+        } catch (IllegalArgumentException e) {
+            return new StatusResponse("error", e.getMessage());
+        }
     }
 
     @DeleteMapping("/{id}")

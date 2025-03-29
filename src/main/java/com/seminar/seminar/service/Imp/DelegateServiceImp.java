@@ -5,6 +5,7 @@ import com.seminar.seminar.model.User;
 import com.seminar.seminar.repository.UserRepository;
 import com.seminar.seminar.response.DelegateResponse;
 import com.seminar.seminar.response.DeleteResponse;
+import com.seminar.seminar.response.StatusResponse;
 import com.seminar.seminar.service.DelegateService;
 import lombok.RequiredArgsConstructor;
 import org.springframework.security.crypto.password.PasswordEncoder;
@@ -31,26 +32,31 @@ public class DelegateServiceImp implements DelegateService {
 
     /**
      * 2.2 Cập nhật thông tin đại biểu
-     * @param id ID của user (đại biểu)
+     *
+     * @param id   ID của user (đại biểu)
      * @param user Đối tượng chứa thông tin mới
      * @return String thông báo thành công
      * @throws IllegalArgumentException nếu không tìm thấy hoặc không phải ROLE_DELEGATE
      */
-    public String updateDelegate(Long id, User user) {
+    public StatusResponse updateDelegate(Long id, User user) {
         Optional<User> existingUser = userRepository.findById(id);
-        if (existingUser.isPresent()) {
-            User delegateToUpdate = existingUser.get();
-            if (delegateToUpdate.getRole() != Role.DELEGATE) {
-                throw new IllegalArgumentException("User with id " + id + " is not a delegate");
-            }
-            delegateToUpdate.setFullName(user.getFullName() != null ? user.getFullName() : delegateToUpdate.getFullName());
-            delegateToUpdate.setPhone(user.getPhone() != null ? user.getPhone() : delegateToUpdate.getPhone()); // Cập nhật phone
-            userRepository.save(delegateToUpdate);
-            return "Delegate updated successfully";
-        } else {
+        if (existingUser.isEmpty()) {
             throw new IllegalArgumentException("Delegate not found with id: " + id);
         }
+
+        User delegateToUpdate = existingUser.get();
+        if (delegateToUpdate.getRole() != Role.DELEGATE) {
+            throw new IllegalArgumentException("User with id " + id + " is not a delegate");
+        }
+
+        delegateToUpdate.setFullName(user.getFullName() != null ? user.getFullName() : delegateToUpdate.getFullName());
+        delegateToUpdate.setPhone(user.getPhone() != null ? user.getPhone() : delegateToUpdate.getPhone());
+        userRepository.save(delegateToUpdate);
+
+        return new StatusResponse("success", "Delegate updated successfully");
     }
+
+
 
     public DelegateResponse getDelegateById(Long id) {
         Optional<User> existingUser = userRepository.findById(id);

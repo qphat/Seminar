@@ -77,7 +77,7 @@ public class ConferenceServiceImp implements ConferenceService {
     }
 
     @Override
-    public String updateConference(Long id, Conference conference) {
+    public StatusResponse updateConference(Long id, Conference conference) {
         Optional<Conference> existingConference = conferenceRepository.findById(id);
         if (existingConference.isEmpty()) {
             throw new IllegalArgumentException("Conference not found with id: " + id);
@@ -98,7 +98,7 @@ public class ConferenceServiceImp implements ConferenceService {
         conferenceToUpdate.setCapacity(
                 conference.getCapacity() != null ? conference.getCapacity() : conferenceToUpdate.getCapacity());
         conferenceToUpdate.setRegistrationDeadline(
-                conference.getRegistrationDeadline() != null ? conference.getRegistrationDeadline() : conferenceToUpdate.getRegistrationDeadline()); // Thêm registrationDeadline
+                conference.getRegistrationDeadline() != null ? conference.getRegistrationDeadline() : conferenceToUpdate.getRegistrationDeadline());
 
         if (conferenceToUpdate.getEndDate().isBefore(conferenceToUpdate.getStartDate())) {
             throw new IllegalArgumentException("End date must be after start date");
@@ -108,15 +108,12 @@ public class ConferenceServiceImp implements ConferenceService {
             throw new IllegalArgumentException("Capacity must be greater than 0");
         }
 
-        // Kiểm tra registrationDeadline phải trước startDate
         if (conferenceToUpdate.getRegistrationDeadline().isAfter(conferenceToUpdate.getStartDate())) {
             throw new IllegalArgumentException("Registration deadline must be before start date");
         }
 
-
-
         conferenceRepository.save(conferenceToUpdate);
-        return "Conference updated successfully";
+        return new StatusResponse("success", "Conference updated successfully");
     }
 
     @Override
