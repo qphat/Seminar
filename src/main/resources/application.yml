@@ -1,1 +1,30 @@
-spring.application.name=Seminar
+spring:
+  application:
+    name: Seminar
+  devtools:
+    livereload:
+      enabled: true
+
+  datasource:
+    url: jdbc:mysql://localhost:3306/Seminar
+    username: root
+    password: 220201
+    driver-class-name: com.mysql.cj.jdbc.Driver
+
+  jpa:
+    hibernate:
+      ddl-auto: update
+    properties:
+      hibernate:
+        dialect: org.hibernate.dialect.MySQLDialect
+
+
+admin:
+  default:
+    email: taoLaAssmin1@gmail.com
+    password: admin123
+
+
+
+server:
+  port: 8089

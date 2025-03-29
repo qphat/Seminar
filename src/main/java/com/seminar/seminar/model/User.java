@@ -1,6 +1,7 @@
-package model;
+package com.seminar.seminar.model;
 
-import domain.Role;
+import com.fasterxml.jackson.annotation.JsonIgnore;
+import com.seminar.seminar.domain.Role;
 import jakarta.persistence.*;
 import lombok.AllArgsConstructor;
 import lombok.Data;
@@ -27,7 +28,11 @@ public class User {
     private String email;
 
     @Column(nullable = false, length = 255)
+    @JsonIgnore
     private String password;
+
+    @Column(nullable = false, length = 255)
+    private String phone;
 
     @Enumerated(EnumType.STRING)
     @Column(nullable = false)

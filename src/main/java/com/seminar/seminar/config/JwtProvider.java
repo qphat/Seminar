@@ -1,4 +1,4 @@
-package com.koomi.seminar2.config;
+package com.seminar.seminar.config;
 
 import io.jsonwebtoken.Jwts;
 import io.jsonwebtoken.security.Keys;
@@ -52,6 +52,15 @@ public class JwtProvider {
                 .parseClaimsJws(jwt)
                 .getBody()
                 .get("email", String.class);
+    }
+
+    public Long getIdFromToken(String jwt) {
+        return Jwts.parserBuilder()
+                .setSigningKey(secretKey)
+                .build()
+                .parseClaimsJws(jwt)
+                .getBody()
+                .get("id", Long.class);
     }
 
     // Xử lý các quyền (authorities)

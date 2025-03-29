@@ -1,8 +1,8 @@
-package service;
+package com.seminar.seminar.service;
 
-import request.LoginRequest;
-import request.SignupRequest;
-import response.AuthResponse;
+import com.seminar.seminar.request.LoginRequest;
+import com.seminar.seminar.request.SignupRequest;
+import com.seminar.seminar.response.AuthResponse;
 
 public interface AuthService {
 

@@ -1,13 +1,14 @@
-package service.Imp;
+package com.seminar.seminar.service.Imp;
 
-import config.JwtProvider;
-import exception.UserException;
+
+import com.seminar.seminar.config.JwtProvider;
+import com.seminar.seminar.exception.UserException;
 import lombok.AllArgsConstructor;
 import lombok.RequiredArgsConstructor;
-import model.User;
+import com.seminar.seminar.model.User;
 import org.springframework.stereotype.Service;
-import repository.UserRepository;
-import service.UserService;
+import com.seminar.seminar.repository.UserRepository;
+import com.seminar.seminar.service.UserService;
 
 @Service
 @RequiredArgsConstructor
@@ -18,7 +19,7 @@ public class UserServicesImp implements UserService {
 
     @Override
     public User findUserProfileByJwt(String jwt) throws UserException {
-        String email=jwtProvider.getEmailFromJwtToken(jwt);
+        String email=jwtProvider.getEmailFromToken(jwt);
         User user = userRepository.findByEmail(email);
         if(user==null) {
             throw new UserException("user not exist with email "+email);
